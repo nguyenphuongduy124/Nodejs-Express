@@ -14,6 +14,9 @@ app.use(bodyParser.urlencoded({
 app.set('view engine', 'pug');
 app.set('views', './views');
 
+// static files
+app.use(express.static('public'));
+
 // get
 app.get('/', function(req, res) {
     res.render('index', {

@@ -1,19 +1,22 @@
-- var qSearch = qSearch
+extends ../layouts/common.pug
 
-h1 User List
+block content
+	- var qSearch = qSearch
 
-a(href="/users/create") New User
+	h1 User List
 
-form(action="/users/search" method="get")
-	div
-		if qSearch
-			input(type="text" placeholder="search..." name="q" value=qSearch)
-		else 
-			input(type="text" placeholder="search..." name="q")
-		input(type="submit" value="Search")
-		
-ul
-	each user in users
-		li= user.name
-			span &nbsp;
-			a(href="/users/" + user.id) view...
+	a(href="/users/create") New User
+
+	form(action="/users/search" method="get" class="form-inline")
+		div.form-group
+			if qSearch
+				input(type="text" placeholder="search..." name="q" value=qSearch class="form-control")
+			else 
+				input(type="text" placeholder="search..." name="q" class="form-control")
+			input(type="submit" value="Search" class="btn btn-primary ml-2")
+			
+	ul
+		each user in users
+			li= user.name
+				span &nbsp;
+				a(href="/users/" + user.id) view...

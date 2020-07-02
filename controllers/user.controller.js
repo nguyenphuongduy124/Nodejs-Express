@@ -8,7 +8,6 @@ module.exports.index = function(req, res) {
 }
 
 module.exports.search = function(req, res) {
-    console.log(req.query);
     var q = req.query.q;
     var users = db.get('users').value();
     var matchesUsers = users.filter(function(user) {

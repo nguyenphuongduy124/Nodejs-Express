@@ -1,6 +1,9 @@
 - var qSearch = qSearch
 
 h1 User List
+
+a(href="/users/create") New User
+
 form(action="/users/search" method="get")
 	div
 		if qSearch
@@ -12,3 +15,5 @@ form(action="/users/search" method="get")
 ul
 	each user in users
 		li= user.name
+			span &nbsp;
+			a(href="/users/" + user.id) view...

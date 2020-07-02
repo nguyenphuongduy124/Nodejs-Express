@@ -1,5 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser')
+
 var app = express();
 var port = 3000;
 
@@ -9,6 +11,7 @@ app.use(bodyParser.json()) // for parsing application/json
 app.use(bodyParser.urlencoded({
         extended: true
     })) // for parsing application/x-www-form-urlencoded
+app.use(cookieParser());
 
 // set template engine
 app.set('view engine', 'pug');

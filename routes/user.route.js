@@ -6,6 +6,11 @@ var validate = require('../validate/user.validate.js');
 
 router.get('/', controller.index);
 
+router.get('/cookie', function(req, res, next) {
+    res.cookie('user-id', '123321');
+    res.send('set cookie');
+})
+
 router.get('/search', controller.search);
 
 

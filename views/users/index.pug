@@ -1,0 +1,14 @@
+- var qSearch = qSearch
+
+h1 User List
+form(action="/users/search" method="get")
+	div
+		if qSearch
+			input(type="text" placeholder="search..." name="q" value=qSearch)
+		else 
+			input(type="text" placeholder="search..." name="q")
+		input(type="submit" value="Search")
+		
+ul
+	each user in users
+		li= user.name

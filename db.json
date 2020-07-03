@@ -6,7 +6,9 @@
     },
     {
       "name": "Duy",
-      "id": "cX1tLAfGF"
+      "id": "cX1tLAfGF",
+      "email": "duy@gmail.com",
+      "password": "123"
     },
     {
       "name": "Vu",

@@ -20,7 +20,6 @@ module.exports.index = function(req, res) {
             pagination.unshift(page - i);
         }
     }
-    console.log(pagination)
 
     res.render('products/index', {
         products: products,

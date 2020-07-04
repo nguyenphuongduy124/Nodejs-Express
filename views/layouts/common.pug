@@ -11,6 +11,10 @@ html
 				.navbar-nav
 				a.nav-item.nav-link(href='/') Home
 				a.nav-item.nav-link(href='/users') Users
+				a.nav-item.nav-link(href='/products') Products
+				a.nav-item.nav-link(href='/cart') Cart
+					span &nbsp;
+					span.badge.badge-pill.badge-danger= totalCart
 
 			if user
 				p= user.name

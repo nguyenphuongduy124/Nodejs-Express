@@ -13,7 +13,7 @@ block content
 					h4
 						span.badge.badge-pill.badge-warning #{product.price} đ
 				div.w-100
-					button.btn.btn-primary.btn-sm View
+					a.btn.btn-primary.btn-sm(href="/cart/add/" + product.id) Add to card
 		nav.d-flex.w-100.justify-content-center(aria-label='Page navigation example')
 			ul.pagination
 				if currentPage <= 1

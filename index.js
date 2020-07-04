@@ -10,15 +10,18 @@ var port = 3000;
 var userRoute = require('./routes/user.route.js');
 var productRoute = require('./routes/product.route.js');
 var authRoute = require('./routes/auth.route.js');
+var cartRoute = require('./routes/cart.route.js');
 
 // middle authentication
 var authMiddleware = require('./middlewares/auth.middleware.js');
+var sessionMiddleware = require('./middlewares/session.middleware.js');
 
 app.use(bodyParser.json()) // for parsing application/json
 app.use(bodyParser.urlencoded({
         extended: true
     })) // for parsing application/x-www-form-urlencoded
 app.use(cookieParser(process.env.SESSION_SECRECT));
+app.use(sessionMiddleware);
 
 // set template engine
 app.set('view engine', 'pug');
@@ -37,6 +40,7 @@ app.get('/', function(req, res) {
 app.use('/users', authMiddleware.requireAuth, userRoute);
 app.use('/products', productRoute);
 app.use('/auth', authRoute);
+app.use('/cart', cartRoute);
 
 
 app.listen(port, function() {

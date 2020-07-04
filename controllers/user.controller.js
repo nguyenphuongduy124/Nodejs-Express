@@ -35,6 +35,12 @@ module.exports.getUser = function(req, res) {
 
 module.exports.postCreate = function(req, res) {
     req.body.id = shortId();
+
+    var destination = req.file.destination.split('/').slice(1).join('');
+    var fileName = req.file.filename;
+    var pathSave = destination + "/" + fileName;
+
+    req.body.avatar = pathSave;
     db.get('users').push(req.body).write();
     res.redirect('/users');
 }

@@ -6,6 +6,9 @@ module.exports.postCreate = function(req, res, next) {
     if (!req.body.phone) {
         errors.push('Phone is required!');
     }
+    if (!req.file) {
+        errors.push('Avatar is required!');
+    }
     // If has errors response error for user, dont run next()
     if (errors.length) {
         res.render('users/create', {

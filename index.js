@@ -7,7 +7,8 @@ var cookieParser = require('cookie-parser');
 var app = express();
 var port = 3000;
 
-var usersRoute = require('./routes/user.route.js');
+var userRoute = require('./routes/user.route.js');
+var productRoute = require('./routes/product.route.js');
 var authRoute = require('./routes/auth.route.js');
 
 // middle authentication
@@ -33,7 +34,8 @@ app.get('/', function(req, res) {
     });
 })
 
-app.use('/users', authMiddleware.requireAuth, usersRoute);
+app.use('/users', authMiddleware.requireAuth, userRoute);
+app.use('/products', productRoute);
 app.use('/auth', authRoute);
 
 

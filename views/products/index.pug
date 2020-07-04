@@ -1,0 +1,41 @@
+extends ../layouts/common.pug
+
+block content
+	h1 Products
+	.row
+		each product in products
+			.col-md-3.mb-3.d-flex.flex-column.align-items-center
+				div
+					img.img-thumbnail(src=product.image)
+				h3.w-100= product.name
+				div= product.description
+				div.price.w-100.mt-2
+					h4
+						span.badge.badge-pill.badge-warning #{product.price} đ
+				div.w-100
+					button.btn.btn-primary.btn-sm View
+		nav.d-flex.w-100.justify-content-center(aria-label='Page navigation example')
+			ul.pagination
+				if currentPage <= 1
+					li.page-item.disabled
+						a.page-link(href="/products?page=" + prevPage) Previous
+				else
+					li.page-item
+						a.page-link(href="/products?page=" + prevPage) Previous
+
+				each element in pagination
+					if element == currentPage
+						li.page-item.active
+							a.page-link(href="/products?page=" + element)= element
+					else 
+						li.page-item
+							a.page-link(href="/products?page=" + element)= element
+
+				if currentPage >= totalPage
+					li.page-item.disabled
+						a.page-link(href="/products?page=" + nextPage) Next
+				else
+					li.page-item
+						a.page-link(href="/products?page=" + nextPage) Next
+
+

@@ -2,7 +2,6 @@ var db = require('../db.js');
 var shortId = require('shortid');
 
 module.exports.index = function(req, res) {
-    console.log(res.locals.user);
     res.render('users/index', {
         users: db.get('users').value()
     });

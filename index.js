@@ -8,7 +8,7 @@ var mongoose = require('mongoose');
 mongoose.connect(process.env.MONGO_URL);
 
 var app = express();
-var port = 3000;
+var port = process.env.PORT || 3000;
 
 var userRoute = require('./routes/user.route.js');
 var productRoute = require('./routes/product.route.js');

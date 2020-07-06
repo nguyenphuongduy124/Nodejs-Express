@@ -1,0 +1,33 @@
+extends ../layouts/common.pug
+
+block content
+	h1 Cart page
+	if isEmpty
+		h6 Giỏ hàng rỗng!
+		p Quay về 
+			a(href="/products") trang mua sắm
+	else
+		table.table
+			thead
+				tr
+					th Image
+					th.text-center Name
+					th.text-center Count
+					th.text-center Total
+
+			tbody
+				each item in cart
+					tr
+						td
+							img(src=item.productImage, height="64")
+						td.text-center= item.productName
+						td.text-center= item.count
+						td.text-center= item.productPrice * item.count
+			tfoot
+				tr
+					td
+					td
+					td.text-center= totalCart
+					td.text-center 
+						b Sum: 
+						span= sum

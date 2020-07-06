@@ -14,9 +14,9 @@ html
 				a.nav-item.nav-link(href='/products') Products
 				a.nav-item.nav-link(href='/cart') Cart
 					span &nbsp;
-					span.badge.badge-pill.badge-danger= totalCart
+					span.badge.badge-pill.badge-danger= totalCart 
 
-			if user
-				p= user.name
+			if userLogin
+				p= userLogin.name
 		.container.pt-5
 			block content

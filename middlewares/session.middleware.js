@@ -1,7 +1,11 @@
-var db = require('../db.js');
+var Session = require('../models/session.model.js');
+var User = require('../models/user.model.js');
+
 var shortid = require('shortid');
-module.exports = function(req, res, next) {
+
+module.exports = async function(req, res, next) {
     var sessionId = req.signedCookies.sessionId;
+
     if (!sessionId) {
         var sessionId = shortid.generate();
 
@@ -9,23 +13,39 @@ module.exports = function(req, res, next) {
             signed: true
         });
 
-        db.get('sessions').push({
-            id: sessionId
-        }).write();
+        var doc = new Session({
+            sessionId: sessionId
+        });
+        doc.save(function(err) {
+            if (err) {
+                console.log(err);
+            }
+        })
     }
 
-    var cart = db.get('sessions').find({
-        id: sessionId
-    }).get('cart').value();
 
-    var total = 0;
-    if (cart) {
-        for (var key in cart) {
-            total += cart[key];
-        }
+    var userId = req.signedCookies.userId;
+    if (userId) {
+        var user = await User.findById(userId);
+        res.locals.userLogin = user
     }
-    res.locals.totalCart = total;
 
+
+    var session = await Session.findOne({
+        sessionId: sessionId
+    });
+
+    var cart = session.cart;
+    if (cart.length === 0) {
+        res.locals.totalCart = 0;
+    } else {
+        var total = 0;
+        cart.reduce(function(accumulator, currentValue) {
+            total = accumulator + currentValue.count;
+            return total;
+        }, 0);
+        res.locals.totalCart = total;
+    }
 
     next();
 

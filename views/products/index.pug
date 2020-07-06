@@ -1,7 +1,8 @@
 extends ../layouts/common.pug
 
 block content
-	h1 Products
+	h1 Products 
+		a.btn.btn-primary(href="/products/create") New product
 	.row
 		each product in products
 			.col-md-3.mb-3.d-flex.flex-column.align-items-center
@@ -22,14 +23,14 @@ block content
 				else
 					li.page-item
 						a.page-link(href="/products?page=" + prevPage) Previous
-
-				each element in pagination
-					if element == currentPage
-						li.page-item.active
-							a.page-link(href="/products?page=" + element)= element
-					else 
-						li.page-item
-							a.page-link(href="/products?page=" + element)= element
+				if pagination
+					each element in pagination
+						if element == currentPage
+							li.page-item.active
+								a.page-link(href="/products?page=" + element)= element
+						else 
+							li.page-item
+								a.page-link(href="/products?page=" + element)= element
 
 				if currentPage >= totalPage
 					li.page-item.disabled

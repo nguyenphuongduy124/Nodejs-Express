@@ -1,42 +1,38 @@
 // var db = require('../db.js');
 var Product = require('../models/product.model.js');
 
-module.exports.index = function(req, res) {
-    // var page = parseInt(req.query.page) || 1;
-    // var itemsPerPage = 8;
+module.exports.index = async function(req, res) {
+    var page = parseInt(req.query.page) || 1;
+    var itemsPerPage = 4;
+    var start = (page - 1) * itemsPerPage;
+    var end = page * itemsPerPage;
 
-    // var products = db.get('products').drop((page - 1) * itemsPerPage).take(itemsPerPage).value();
-    // var totalPage = Math.ceil(db.get('products').value().length / itemsPerPage);
+    var products = await Product.find();
+    var totalPage = Math.ceil(products.length / itemsPerPage);
+    var limitProducts = products.slice(start, end);
 
     // // Check page greatter totalPage
-    // if (page > totalPage) page = totalPage;
-    // if (page < 1) page = 1;
-    // var pagination = [page];
+    if (page > totalPage) page = totalPage;
+    if (page < 1) page = 1;
+    var pagination = [page];
 
-    // for (var i = 1; i < 3; i++) {
-    //     if (page + i <= totalPage) {
-    //         pagination.push(page + i);
-    //     }
-    //     if (page - i >= 1) {
-    //         pagination.unshift(page - i);
-    //     }
-    // }
+    for (var i = 1; i < 3; i++) {
+        if (page + i <= totalPage) {
+            pagination.push(page + i);
+        }
+        if (page - i >= 1) {
+            pagination.unshift(page - i);
+        }
+    }
 
-    // res.render('products/index', {
-    //     products: products,
-    //     totalPage: totalPage,
-    //     currentPage: page,
-    //     nextPage: page + 1,
-    //     prevPage: page - 1,
-    //     pagination: pagination
-    // });
-    //
-
-    Product.find().then(function(products) {
-        res.render('products/index', {
-            products: products
-        })
-    })
+    res.render('products/index', {
+        products: limitProducts,
+        totalPage: totalPage,
+        currentPage: page,
+        nextPage: page + 1,
+        prevPage: page - 1,
+        pagination: pagination
+    });
 }
 
 module.exports.create = function(req, res) {
@@ -45,9 +41,8 @@ module.exports.create = function(req, res) {
 
 module.exports.postCreate = function(req, res) {
     var newProduct = req.body;
-    var path = req.file.path.split('\\').slice(1).join('/');
-    newProduct.image = path;
-
+    var image = newProduct.image ? newProduct.image : process.env.DEFAULT_IMAGE;
+    newProduct.image = image;
     var doc = new Product(newProduct);
     doc.save(function(err) {
         if (err) {

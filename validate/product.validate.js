@@ -9,9 +9,6 @@ module.exports.postCreate = function(req, res, next) {
     if (!req.body.price) {
         errors.push('Product price is required!');
     }
-    if (!req.file.fieldname) {
-        errors.push('Product image is required!');
-    }
 
     // If has errors response error for user, dont run next()
     if (errors.length) {

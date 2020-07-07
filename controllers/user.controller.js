@@ -39,16 +39,13 @@ module.exports.getUser = async function(req, res) {
 }
 
 module.exports.postCreate = async function(req, res) {
+    // urlImage
     var path = req.path.slice(1); // path = create || id: "..."
-    var pathImage = process.env.DEFAULT_IMAGE;
-    if (req.file) {
-        var destination = req.file.destination.split('/').slice(1).join('');
-        var fileName = req.file.filename;
-        pathImage = destination + "/" + fileName;
-    }
-    if (path === 'create') {
+    var urlImage = req.body.urlImage;
+    urlImage = urlImage ? urlImage : process.env.DEFAULT_IMAGE;
 
-        req.body.avatar = pathImage;
+    if (path === 'create') {
+        req.body.avatar = urlImage;
         req.body.password = md5(req.body.password);
 
         var doc = new User(req.body);
@@ -62,18 +59,19 @@ module.exports.postCreate = async function(req, res) {
             }
         });
     } else {
+
         var user = await User.findById(path);
 
         if (!user) {
             res.send('User does not exists!!!');
-            return
+            return;
         }
 
-        if (pathImage === process.env.DEFAULT_IMAGE) {
-            pathImage = user.avatar;
+        if (urlImage === process.env.DEFAULT_IMAGE) {
+            urlImage = user.avatar;
         }
 
-        req.body.avatar = pathImage;
+        req.body.avatar = urlImage;
         if (!user.avatar) {
             req.body.avatar = process.env.DEFAULT_IMAGE;
         }
